@@ -64,15 +64,17 @@ public abstract class Crypt {
         String text = "";
 
         try{
-            text = getCheckedString(Files.readString(Path.of(path)), (isEncrypting)? plainAlphabet : cipherAlphabet);
+            var pathObject = Path.of(path);
+            if (Files.exists(pathObject)){
+                text = getCheckedString(Files.readString(pathObject), (isEncrypting)? plainAlphabet : cipherAlphabet);
+            }
+            else {
+                return "cannot open this file";//переделать потом
+            }
         }
         catch (IOException ex){
 
             System.out.println("cannot open");
-        }
-        catch (Exception ex){
-
-            System.out.println(ex.getMessage());
         }
 
         return text;
